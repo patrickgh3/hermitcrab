@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class Crab : MonoBehaviour {
     [SerializeField] SphereCollider pickupCollider;
+    [SerializeField] BoxCollider wallCollider;
     [SerializeField] Transform bottleCapPos;
     [SerializeField] Transform canPos;
-    [SerializeField] 
 
     GameObject shell;
     float pickupTime;
@@ -13,6 +13,15 @@ public class Crab : MonoBehaviour {
     Transform pickupTargetPos;
 
     float lookAngle = 90;
+
+    enum State {
+        Walking,
+        Growing,
+    }
+    State state = State.Walking;
+
+    float growTime;
+    float growDuration = 2f;
 
     void Awake() {
         bottleCapPos.gameObject.SetActive(false);
@@ -32,7 +41,33 @@ public class Crab : MonoBehaviour {
         */
 
         // Move
-        transform.position += new Vector3(inputVector.x, 0, inputVector.y) * 0.1f;
+        Vector3 deltaPos = new Vector3(inputVector.x, 0, inputVector.y) * 8f * Time.deltaTime;
+        Vector3 deltaPosX = new Vector3(deltaPos.x, 0, 0);
+        Vector3 deltaPosZ = new Vector3(0, 0, deltaPos.z);
+        if (!Physics.CheckBox(
+                wallCollider.transform.position + deltaPosX,
+                wallCollider.size,
+                Quaternion.identity,
+                (1<<LayerMask.NameToLayer("Wall")))) {
+            transform.position += deltaPosX;
+        }
+        if (!Physics.CheckBox(
+                wallCollider.transform.position + deltaPosZ,
+                wallCollider.size,
+                Quaternion.identity,
+                (1 << LayerMask.NameToLayer("Wall")))) {
+            transform.position += deltaPosZ;
+        }
+
+        /*
+        Collider[] colls = Physics.OverlapSphere(
+                    pickupCollider.transform.position,
+                    pickupCollider.radius,
+                    ~(1<<LayerMask.NameToLayer("Wall")));
+        for (int i = 0; i < colls.Length; i++) {
+            Debug.Log(colls[i].gameObject.name);
+        }
+        */
 
         // Rotate
         if (inputVector.magnitude != 0) {
@@ -45,9 +80,9 @@ public class Crab : MonoBehaviour {
         Collider[] shells = Physics.OverlapSphere(
                     pickupCollider.transform.position,
                     pickupCollider.radius,
-                    ~LayerMask.NameToLayer("Shell"));
+                    (1<<LayerMask.NameToLayer("Shell")));
 
-        if (Input.GetButtonDown("Action")) {
+        if (state == State.Walking && Input.GetButtonDown("Action")) {
             // Drop current shell
             if (shell != null) {
                 shell.transform.parent = null;
@@ -91,8 +126,13 @@ public class Crab : MonoBehaviour {
         }
 
         // Testing key to grow
-        if (Input.GetKeyDown(KeyCode.Alpha1)) {
-            transform.localScale *= 2;
+        if (state == State.Walking && Input.GetKeyDown(KeyCode.Alpha1)) {
+            state = State.Growing;
+            growTime = Time.time;
+        }
+
+        if (state == State.Growing) {
+
         }
 
         // Update shell transform moving to the preset position on the crab's back
