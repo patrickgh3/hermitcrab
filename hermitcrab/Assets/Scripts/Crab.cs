@@ -13,6 +13,8 @@ public class Crab : MonoBehaviour {
     }
     State state = State.Walking;
 
+    float walkSpeed = 8f;
+
     float lookAngle = 90;
 
     GameObject shell;
@@ -21,7 +23,7 @@ public class Crab : MonoBehaviour {
     Transform pickupTargetPos;
 
     float growTime;
-    float growDuration = 2f;
+    float growDuration = 1f;
     float growStartScale = 1f;
     float growEndScale = 1f;
     int sizeIndex = 0;
@@ -38,7 +40,7 @@ public class Crab : MonoBehaviour {
         Vector2 inputVector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
         // Move
-        Vector3 deltaPos = new Vector3(inputVector.x, 0, inputVector.y) * 8f * Time.deltaTime;
+        Vector3 deltaPos = new Vector3(inputVector.x, 0, inputVector.y) * walkSpeed * Time.deltaTime;
         Vector3 deltaPosX = new Vector3(deltaPos.x, 0, 0);
         Vector3 deltaPosZ = new Vector3(0, 0, deltaPos.z);
         if (!Physics.CheckBox(
@@ -101,6 +103,16 @@ public class Crab : MonoBehaviour {
                 growEndScale = positions[sizeIndex].transform.localScale.x;
 
                 DropShell();
+
+                float offsetScalar = 1f;
+                if (sizeIndex == 3) offsetScalar = 1.25f;
+                if (sizeIndex == 4) offsetScalar = 1.5f;
+                if (sizeIndex == 5) offsetScalar = 2f;
+                Camera.main.GetComponent<CameraMove>().offsetScalar = offsetScalar;
+
+                if (sizeIndex == 3) walkSpeed = 10f;
+                if (sizeIndex == 4) walkSpeed = 12f;
+                if (sizeIndex == 5) walkSpeed = 15f;
             }
         }
 
