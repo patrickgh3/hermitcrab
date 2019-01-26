@@ -5,6 +5,7 @@ public class Crab : MonoBehaviour {
     [SerializeField] SphereCollider pickupCollider;
     [SerializeField] Transform bottleCapPos;
     [SerializeField] Transform canPos;
+    [SerializeField] 
 
     GameObject shell;
     float pickupTime;
@@ -14,14 +15,24 @@ public class Crab : MonoBehaviour {
     float lookAngle = 90;
 
     void Update() {
-        // Move
+        // Get input
         Vector2 inputVector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+
+        /*
+        float inputAngle = Util.Vector2ToDegrees(inputVector);
+        float cameraAngle = Util.Vector2ToDegrees(Camera.main.transform.eulerAngles);
+        Debug.Log("inputAngle: " + inputAngle.ToString());
+        Debug.Log("cameraAngle: " + cameraAngle.ToString());
+        //inputVector = Util.DegreeToVector2(inputAngle);
+        */
+
+        // Move
         transform.position += new Vector3(inputVector.x, 0, inputVector.y) * 0.1f;
 
         // Rotate
         if (inputVector.magnitude != 0) {
-            float targetAngle = Vector2.SignedAngle(Vector2.right, inputVector);
-            lookAngle = Mathf.LerpAngle(lookAngle, targetAngle, 0.15f);
+            float inputAngle = Util.Vector2ToDegrees(inputVector);
+            lookAngle = Mathf.LerpAngle(lookAngle, inputAngle, 0.15f);
             transform.forward = new Vector3(Mathf.Cos(lookAngle * Mathf.Deg2Rad), 0, Mathf.Sin(lookAngle * Mathf.Deg2Rad));
         }
 
