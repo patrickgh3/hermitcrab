@@ -14,6 +14,11 @@ public class Crab : MonoBehaviour {
 
     float lookAngle = 90;
 
+    void Awake() {
+        bottleCapPos.gameObject.SetActive(false);
+        canPos.gameObject.SetActive(false);
+    }
+
     void Update() {
         // Get input
         Vector2 inputVector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
@@ -83,6 +88,11 @@ public class Crab : MonoBehaviour {
                 shellRB.detectCollisions = false;
                 shellRB.isKinematic = true;
             }
+        }
+
+        // Testing key to grow
+        if (Input.GetKeyDown(KeyCode.Alpha1)) {
+            transform.localScale *= 2;
         }
 
         // Update shell transform moving to the preset position on the crab's back
