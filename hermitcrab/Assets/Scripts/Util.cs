@@ -12,4 +12,30 @@ public class Util {
     public static float Vector2ToDegrees(Vector2 vec) {
         return Vector2.SignedAngle(Vector2.right, vec);
     }
+
+    // Easing function from:
+    // https://gist.github.com/cjddmut/d789b9eb78216998e95c
+
+    public static float EaseOutElastic(float start, float end, float value) {
+        end -= start;
+
+        float d = 1f;
+        float p = d * .3f;
+        float s;
+        float a = 0;
+
+        if (value == 0) return start;
+
+        if ((value /= d) == 1) return start + end;
+
+        if (a == 0f || a < Mathf.Abs(end)) {
+            a = end;
+            s = p * 0.25f;
+        }
+        else {
+            s = p / (2 * Mathf.PI) * Mathf.Asin(end / a);
+        }
+
+        return (a * Mathf.Pow(2, -10 * value) * Mathf.Sin((value * d - s) * (2 * Mathf.PI) / p) + end + start);
+    }
 }
