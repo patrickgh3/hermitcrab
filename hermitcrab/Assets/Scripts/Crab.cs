@@ -5,16 +5,27 @@ public class Crab : MonoBehaviour {
     [SerializeField] SphereCollider pickupCollider;
     [SerializeField] Transform bottleCapPos;
     [SerializeField] Transform canPos;
+
     GameObject shell;
+    float pickupTime;
+    float pickupDuration = 3f;
+    Transform pickupTargetPos;
+
+    float lookAngle = 90;
 
     void Update() {
-        Vector3 inputVector = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
-        transform.position += inputVector * 0.1f;
+        // Move
+        Vector2 inputVector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        transform.position += new Vector3(inputVector.x, 0, inputVector.y) * 0.1f;
 
+        // Rotate
         if (inputVector.magnitude != 0) {
-            transform.forward = inputVector;
+            float targetAngle = Vector2.SignedAngle(Vector2.right, inputVector);
+            lookAngle = Mathf.LerpAngle(lookAngle, targetAngle, 0.15f);
+            transform.forward = new Vector3(Mathf.Cos(lookAngle * Mathf.Deg2Rad), 0, Mathf.Sin(lookAngle * Mathf.Deg2Rad));
         }
 
+        // Find nearby shells
         Collider[] shells = Physics.OverlapSphere(
                     pickupCollider.transform.position,
                     pickupCollider.radius,
@@ -37,29 +48,44 @@ public class Crab : MonoBehaviour {
                 shell = null;
             }
 
-            // Pick up shell
+            // Pick up shell if there is one
             if (shells.Length > 0) {
                 // For now, just pick a random shell in the returned array.
                 // In the future, we might want to pick the closest shell, and also
                 // display a highight around that closest shell when the player comes close.
                 shell = shells[0].gameObject;
 
+                pickupTime = Time.time;
+
                 // Set the shell's transform to the appropriate preset position
                 shell.transform.parent = transform;
-                Transform presetPos = bottleCapPos;
                 Shell.ShellType shellType = shell.GetComponent<Shell>().Type;
                 switch (shellType) {
-                    case Shell.ShellType.BottleCap: presetPos = bottleCapPos; break;
-                    case Shell.ShellType.Can: presetPos = canPos; break;
+                    case Shell.ShellType.BottleCap: pickupTargetPos = bottleCapPos; break;
+                    case Shell.ShellType.Can: pickupTargetPos = canPos; break;
+                    default: Debug.LogWarning("Missing ShellType case"); break;
                 }
-                shell.transform.localPosition = presetPos.localPosition;
-                shell.transform.localRotation = presetPos.localRotation;
 
                 shell.layer = LayerMask.NameToLayer("Default");
 
                 Rigidbody shellRB = shell.GetComponent<Rigidbody>();
                 shellRB.detectCollisions = false;
                 shellRB.isKinematic = true;
+            }
+        }
+
+        // Update shell transform moving to the preset position on the crab's back
+        if (shell != null) {
+            if (Time.time - pickupTime < pickupDuration) {
+                float lerpT = (Time.time - pickupTime) / pickupDuration;
+                shell.transform.localPosition = Vector3.Slerp(
+                        shell.transform.localPosition, pickupTargetPos.localPosition, lerpT);
+                shell.transform.localRotation = Quaternion.Slerp(
+                        shell.transform.localRotation, pickupTargetPos.localRotation, lerpT);
+            }
+            else {
+                shell.transform.localPosition = pickupTargetPos.localPosition;
+                shell.transform.localRotation = pickupTargetPos.localRotation;
             }
         }
     }
