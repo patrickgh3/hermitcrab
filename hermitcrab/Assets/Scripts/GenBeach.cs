@@ -44,8 +44,16 @@ public class GenBeach : MonoBehaviour {
                     shell.transform.Rotate(Vector3.up, Random.Range(-60f, 60f));
                 }
 
-                // Randomize rocks and seaweed
-                if (i == 8 || i == 9) {
+                // Randomize rocks
+                if (i == 8) {
+                    shell.transform.Rotate(Vector3.up, Random.Range(0f, 360f));
+                    shell.transform.Rotate(Vector2.right, Random.Range(0, 360f));
+                    float scale = Random.Range(0.25f, 0.75f);
+                    shell.transform.localScale = new Vector3(scale, scale, scale);
+                }
+
+                // Randomize seaweed
+                if (i == 9) {
                     shell.transform.Rotate(Vector3.up, Random.Range(0f, 360f));
                     shell.transform.Rotate(Vector2.right, Random.Range(0, 360f));
                     float scale = Random.Range(0.5f, 2f);

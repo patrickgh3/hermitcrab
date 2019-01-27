@@ -8,12 +8,15 @@ public class World : MonoBehaviour {
         GameOverSwoop,
         SeagullScreech,
         ShellGrab,
+        ShellPop,
     }
 
     [SerializeField] AudioSource music1;
     [SerializeField] AudioSource ambiance;
     [SerializeField] AudioSource sfx;
+    [SerializeField] AudioSource sfxPop;
     [SerializeField] AudioSource walking;
+    [SerializeField] AudioSource seagulls;
 
     [SerializeField] AudioClip NoShell1;
     [SerializeField] AudioClip NoShell2;
@@ -21,6 +24,7 @@ public class World : MonoBehaviour {
     [SerializeField] AudioClip Shell1;
     [SerializeField] AudioClip Shell2;
     [SerializeField] AudioClip Shell3;
+    [SerializeField] AudioClip LastShellObtained;
     [SerializeField] AudioClip Win;
 
     [SerializeField] AudioClip AngrySeagull;
@@ -31,8 +35,10 @@ public class World : MonoBehaviour {
     [SerializeField] AudioClip ShellGrab;
     [SerializeField] AudioClip TitleScreenAmbiance;
     [SerializeField] AudioClip Walking;
+    [SerializeField] AudioClip ShellPop;
 
     [SerializeField] Crab crab;
+    [SerializeField] HUD hud;
 
     public static void PlaySound(Sound sound) {
         instance.PlaySoundInst(sound);
@@ -46,9 +52,15 @@ public class World : MonoBehaviour {
             case (Sound.GameOverSwoop): clip = GameOverSwoop; break;
             case (Sound.SeagullScreech): clip = SeagullScreech; break;
             case (Sound.ShellGrab): clip = ShellGrab; break;
+            case (Sound.ShellPop): clip = ShellPop; break;
         }
 
-        GetComponent<AudioSource>().PlayOneShot(clip);
+        AudioSource src = sfx;
+        if (sound == Sound.ShellPop) {
+            src = sfxPop;
+        }
+
+        src.PlayOneShot(clip);
     }
 
     public static void SetWalking(bool w) {
@@ -58,6 +70,11 @@ public class World : MonoBehaviour {
         else if (!w) {
             instance.walking.Stop();
         }
+    }
+
+    public static void PlayLastShellMusic() {
+        instance.music1.clip = instance.LastShellObtained;
+        instance.music1.Play();
     }
 
     static World instance;
@@ -78,6 +95,7 @@ public class World : MonoBehaviour {
         music1.Stop();
         ambiance.Stop();
         walking.Stop();
+        seagulls.Stop();
 
         string sceneName = SceneManager.GetActiveScene().name;
 
@@ -95,7 +113,18 @@ public class World : MonoBehaviour {
             music1.Play();
         }
 
+        if (sceneName == "Win") {
+            music1.clip = Win;
+            music1.Play();
+        }
+
+        if (sceneName == "GenScene" || sceneName == "Title") {
+            seagulls.clip = AngrySeagull;
+            seagulls.Play();
+        }
+
         crab = FindObjectOfType<Crab>();
+        hud = FindObjectOfType<HUD>();
     }
 
     void Update() {
@@ -108,7 +137,7 @@ public class World : MonoBehaviour {
         if (sceneName == "GenScene") {
             if (!music1.isPlaying) {
                 if (crab.shell == null) {
-                    if (crab.sizeIndex == 0) {
+                    if (crab.sizeIndex == 0 || crab.sizeIndex == 2 || crab.sizeIndex == 4) {
                         music1.clip = NoShell1;
                     }
                     else {
@@ -116,14 +145,26 @@ public class World : MonoBehaviour {
                     }
                 }
                 else {
-                    if (crab.sizeIndex == 0) {
+                    if (crab.sizeIndex == 0 || crab.sizeIndex == 3) {
                         music1.clip = Shell1;
                     }
-                    else {
+                    else if (crab.sizeIndex == 1 || crab.sizeIndex == 4) {
                         music1.clip = Shell2;
+                    }
+                    else {
+                        music1.clip = Shell3;
                     }
                 }
                 music1.Play();
+            }
+
+            hud.SetSize(crab.periodicGrowTime / crab.growPeriod);
+
+            if (crab.shell == null) {
+                hud.SetText("Find a home!");
+            }
+            else {
+                hud.SetText("Grow!");
             }
         }
     }

@@ -29,8 +29,9 @@ public class Crab : MonoBehaviour {
     float growEndScale = 1f;
     public int sizeIndex = 0;
 
-    float periodicGrowTime;
-    float growPeriod = 22f;
+    public float periodicGrowTime;
+    public float growPeriod = 12f;
+    [SerializeField] float[] growPeriods;
 
     void Awake() {
         crab.SetActive(true);
@@ -108,6 +109,9 @@ public class Crab : MonoBehaviour {
                 shellRB.detectCollisions = false;
                 shellRB.isKinematic = true;
 
+                if (sizeIndex == 5) {
+                    World.PlayLastShellMusic();
+                }
                 World.PlaySound(World.Sound.ShellGrab);
             }
         }
@@ -115,6 +119,9 @@ public class Crab : MonoBehaviour {
         // Grow periodically
         if (shell != null) {
             periodicGrowTime += Time.deltaTime;
+        }
+        if (sizeIndex < growPeriods.Length) {
+            growPeriod = growPeriods[sizeIndex];
         }
         if (state == State.Walking && periodicGrowTime > growPeriod) {
             periodicGrowTime = 0;
@@ -202,6 +209,8 @@ public class Crab : MonoBehaviour {
             shellRB.angularVelocity = new Vector3(Random.Range(100f, 300f), Random.Range(100f, 300f), Random.Range(100f, 300f));
 
             shell = null;
+
+            World.PlaySound(World.Sound.ShellPop);
         }
     }
 
