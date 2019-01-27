@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 
 public class GullShadow : MonoBehaviour {
-    float direction = 0; // 0 = right
-    float speed = 5f;
+    public float direction = 0; // 0 = right
+    public float curve = 2f;
+    public float speed = 5f;
+    float bounds = 150f;
 
     void Update() {
-        direction += Time.deltaTime * 10;
+        direction += Time.deltaTime * curve;
 
         // Move
         Vector2 velocityXZ = Util.DegreeToVector2(direction);
@@ -14,5 +16,11 @@ public class GullShadow : MonoBehaviour {
 
         // Set rotation
         transform.localEulerAngles = new Vector3(90, 90 - direction, 0);
+
+        // Destroy if far away
+        if (transform.position.x < -bounds || transform.position.x > bounds
+                || transform.position.z < -bounds || transform.position.z > bounds) {
+            Destroy(gameObject);
+        }
     }
 }

@@ -26,7 +26,7 @@ public class Crab : MonoBehaviour {
     float growDuration = 1f;
     float growStartScale = 1f;
     float growEndScale = 1f;
-    int sizeIndex = 0;
+    public int sizeIndex = 0;
 
     float periodicGrowTime;
     float growPeriod = 15f;
@@ -127,9 +127,9 @@ public class Crab : MonoBehaviour {
                 if (sizeIndex == 5) offsetScalar = 2f;
                 Camera.main.GetComponent<CameraMove>().offsetScalar = offsetScalar;
 
-                if (sizeIndex == 3) walkSpeed = 11f;
-                if (sizeIndex == 4) walkSpeed = 13f;
-                if (sizeIndex == 5) walkSpeed = 15f;
+                if (sizeIndex == 3) walkSpeed = 12f;
+                if (sizeIndex == 4) walkSpeed = 15f;
+                if (sizeIndex == 5) walkSpeed = 18f;
             }
         }
 
