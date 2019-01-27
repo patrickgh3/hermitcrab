@@ -38,4 +38,18 @@ public class Util {
 
         return (a * Mathf.Pow(2, -10 * value) * Mathf.Sin((value * d - s) * (2 * Mathf.PI) / p) + end + start);
     }
+
+    public static float Bounce(float start, float end, float value) {
+        float lerpT = value % 1f;
+        float airTime = 0.8f;
+
+        if (lerpT < airTime) {
+            lerpT /= airTime;
+            lerpT = -Mathf.Pow(2f * lerpT - 1f, 2f) + 1f;
+            return Mathf.Lerp(start, end, lerpT);
+        }
+        else {
+            return start;
+        }
+    }
 }

@@ -23,5 +23,8 @@ public class World : MonoBehaviour {
         if (Input.GetButtonDown("Restart")) {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
+        if (Input.GetButtonDown("Cancel")) {
+            SceneManager.LoadScene("Title");
+        }
     }
 }
