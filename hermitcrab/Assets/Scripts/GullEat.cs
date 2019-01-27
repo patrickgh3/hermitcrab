@@ -39,7 +39,7 @@ public class GullEat : MonoBehaviour {
         }
 
         if (t >= duration1 + duration2) {
-            SceneManager.LoadScene("TestScene");
+            SceneManager.LoadScene("GenScene");
         }
     }
 }

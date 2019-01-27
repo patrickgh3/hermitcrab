@@ -13,7 +13,7 @@ public class Crab : MonoBehaviour {
     }
     State state = State.Walking;
 
-    float walkSpeed = 8f;
+    float walkSpeed = 9f;
 
     float lookAngle = 90;
 
@@ -27,6 +27,9 @@ public class Crab : MonoBehaviour {
     float growStartScale = 1f;
     float growEndScale = 1f;
     int sizeIndex = 0;
+
+    float periodicGrowTime;
+    float growPeriod = 5f;
 
     void Awake() {
         crab.SetActive(true);
@@ -77,6 +80,11 @@ public class Crab : MonoBehaviour {
             DropShell();
 
             shell = pickShell(shells);
+
+            if (shell == null && shells.Length > 0) {
+                // TODO: Play wrong size sound
+            }
+
             if (shell != null) {
                 pickupTime = Time.time;
 
@@ -93,9 +101,17 @@ public class Crab : MonoBehaviour {
             }
         }
 
-        // Testing key to grow
-        if (state == State.Walking && Input.GetKeyDown(KeyCode.Alpha1)) {
-            if (sizeIndex < positions.Length - 1) {
+        // Grow periodically
+        if (shell != null) {
+            periodicGrowTime += Time.deltaTime;
+        }
+        if (state == State.Walking && periodicGrowTime > growPeriod) {
+            periodicGrowTime = 0;
+
+            if (sizeIndex == positions.Length - 1) {
+                Debug.Log("Win");
+            }
+            else {
                 state = State.Growing;
                 growTime = Time.time;
 
@@ -111,8 +127,8 @@ public class Crab : MonoBehaviour {
                 if (sizeIndex == 5) offsetScalar = 2f;
                 Camera.main.GetComponent<CameraMove>().offsetScalar = offsetScalar;
 
-                if (sizeIndex == 3) walkSpeed = 10f;
-                if (sizeIndex == 4) walkSpeed = 12f;
+                if (sizeIndex == 3) walkSpeed = 11f;
+                if (sizeIndex == 4) walkSpeed = 13f;
                 if (sizeIndex == 5) walkSpeed = 15f;
             }
         }
