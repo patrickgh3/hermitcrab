@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Crab : MonoBehaviour {
     [SerializeField] SphereCollider pickupCollider;
@@ -151,7 +151,7 @@ public class Crab : MonoBehaviour {
                 1 << LayerMask.NameToLayer("GullShadow"));
         if (gulls.Length > 0) {
             GameObject gull = gulls[0].gameObject;
-            Destroy(gameObject);
+            SceneManager.LoadScene("Eat");
         }
     }
 
