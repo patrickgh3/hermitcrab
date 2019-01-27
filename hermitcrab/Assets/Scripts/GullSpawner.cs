@@ -9,15 +9,10 @@ public class GullSpawner : MonoBehaviour {
 
     void Awake() {
         gullShadowTemplate.SetActive(false);
-        //Destroy(gullShadowTemplate);
     }
 
     void Update() {
-        //GullShadow[] gulls = FindObjectsOfType<GullShadow>();
-        //Debug.Log(gulls.Length);
-
         t += Time.deltaTime;
-
         if (t > spawnPeriods[crab.sizeIndex]) {
             t = 0;
             GullShadow gullShadow = Instantiate(gullShadowTemplate).GetComponent<GullShadow>();
@@ -48,9 +43,9 @@ public class GullSpawner : MonoBehaviour {
                         dist, gullShadowTemplate.transform.position.y, Random.Range(-dist, dist));
                 gullShadow.direction = 180f;
             }
-            gullShadow.direction += Random.Range(-45f, 45f);
-            gullShadow.curve = Random.Range(-10f, 10f);
-            gullShadow.speed = 10f;
+            gullShadow.direction += Random.Range(-35f, 35f);
+            gullShadow.curve = Random.Range(-9f, 9f);
+            gullShadow.speed = 9f;
         }
     }
 }

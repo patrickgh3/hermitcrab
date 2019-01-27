@@ -7,14 +7,16 @@ public class GullEat : MonoBehaviour {
     [SerializeField] GameObject upperBeak;
     [SerializeField] GameObject lowerBeak;
     float t = 0;
-    float duration1 = 0.75f;
-    float duration2 = 1.5f;
+    float duration1 = 1f;
+    float duration2 = 3f;
     bool gotCrab = false;
 
     void Awake() {
         foreach (GameObject pos in positions) {
             pos.SetActive(false);
         }
+        World.PlaySound(World.Sound.GameOverSwoop);
+        World.PlaySound(World.Sound.SeagullScreech);
     }
 
     void Update() {

@@ -4,7 +4,7 @@ public class GullShadow : MonoBehaviour {
     public float direction = 0; // 0 = right
     public float curve = 2f;
     public float speed = 5f;
-    float bounds = 150f;
+    float bounds = 175f;
 
     void Update() {
         direction += Time.deltaTime * curve;

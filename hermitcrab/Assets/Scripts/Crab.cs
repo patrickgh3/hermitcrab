@@ -18,7 +18,7 @@ public class Crab : MonoBehaviour {
 
     float lookAngle = 90;
 
-    GameObject shell;
+    public GameObject shell;
     float pickupTime;
     float pickupDuration = 3f;
     Transform pickupTargetPos;
@@ -30,7 +30,7 @@ public class Crab : MonoBehaviour {
     public int sizeIndex = 0;
 
     float periodicGrowTime;
-    float growPeriod = 13f;
+    float growPeriod = 22f;
 
     void Awake() {
         crab.SetActive(true);
@@ -64,9 +64,11 @@ public class Crab : MonoBehaviour {
 
         if (deltaPos != Vector3.zero) {
             crabAnimator.SetInteger("Run", 1);
+            World.SetWalking(true);
         }
         else {
             crabAnimator.SetInteger("Run", 0);
+            World.SetWalking(false);
         }
 
         // Rotate
@@ -90,10 +92,9 @@ public class Crab : MonoBehaviour {
             shell = pickShell(shells);
 
             if (shell == null && shells.Length > 0) {
-                // TODO: Play wrong size sound
+                World.PlaySound(World.Sound.CantGrab);
             }
-
-            if (shell != null) {
+            else if (shell != null) {
                 pickupTime = Time.time;
 
                 // Find the shell's preset position
@@ -106,6 +107,8 @@ public class Crab : MonoBehaviour {
                 Rigidbody shellRB = shell.GetComponent<Rigidbody>();
                 shellRB.detectCollisions = false;
                 shellRB.isKinematic = true;
+
+                World.PlaySound(World.Sound.ShellGrab);
             }
         }
 
