@@ -29,7 +29,7 @@ public class Crab : MonoBehaviour {
     int sizeIndex = 0;
 
     float periodicGrowTime;
-    float growPeriod = 5f;
+    float growPeriod = 15f;
 
     void Awake() {
         crab.SetActive(true);
