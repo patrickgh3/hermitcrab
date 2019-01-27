@@ -47,14 +47,14 @@ public class Crab : MonoBehaviour {
                 wallCollider.transform.position + deltaPosX,
                 wallCollider.size,
                 Quaternion.identity,
-                (1<<LayerMask.NameToLayer("Wall")))) {
+                1<<LayerMask.NameToLayer("Wall"))) {
             transform.position += deltaPosX;
         }
         if (!Physics.CheckBox(
                 wallCollider.transform.position + deltaPosZ,
                 wallCollider.size,
                 Quaternion.identity,
-                (1 << LayerMask.NameToLayer("Wall")))) {
+                1 << LayerMask.NameToLayer("Wall"))) {
             transform.position += deltaPosZ;
         }
 
@@ -62,14 +62,15 @@ public class Crab : MonoBehaviour {
         if (inputVector.magnitude != 0) {
             float inputAngle = Util.Vector2ToDegrees(inputVector);
             lookAngle = Mathf.LerpAngle(lookAngle, inputAngle, 0.15f);
-            transform.forward = new Vector3(Mathf.Cos(lookAngle * Mathf.Deg2Rad), 0, Mathf.Sin(lookAngle * Mathf.Deg2Rad));
+            Vector2 forwardXZ = Util.DegreeToVector2(lookAngle);
+            transform.forward = new Vector3(forwardXZ.x, 0, forwardXZ.y);
         }
 
         // Find nearby shells
         Collider[] shells = Physics.OverlapSphere(
                     pickupCollider.transform.position,
                     pickupCollider.radius,
-                    (1<<LayerMask.NameToLayer("Shell")));
+                    1<<LayerMask.NameToLayer("Shell"));
 
         // Press space bar
         if (state == State.Walking && Input.GetButtonDown("Action")) {
@@ -140,6 +141,17 @@ public class Crab : MonoBehaviour {
                 shell.transform.localPosition = pickupTargetPos.localPosition;
                 shell.transform.localRotation = pickupTargetPos.localRotation;
             }
+        }
+
+        // Collision with gull shadows
+        Collider[] gulls = Physics.OverlapBox(
+                wallCollider.transform.position + deltaPosX,
+                wallCollider.size,
+                Quaternion.identity,
+                1 << LayerMask.NameToLayer("GullShadow"));
+        if (gulls.Length > 0) {
+            GameObject gull = gulls[0].gameObject;
+            Destroy(gameObject);
         }
     }
 

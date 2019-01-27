@@ -13,7 +13,9 @@ public class CameraMove : MonoBehaviour {
     }
 
     void Update() {
-        Vector3 targetPos = crab.transform.position + crabOffset * offsetScalar;
-        transform.position = Vector3.Lerp(transform.position, targetPos, 0.15f);
+        if (crab != null) {
+            Vector3 targetPos = crab.transform.position + crabOffset * offsetScalar;
+            transform.position = Vector3.Lerp(transform.position, targetPos, 0.15f);
+        }
     }
 }
