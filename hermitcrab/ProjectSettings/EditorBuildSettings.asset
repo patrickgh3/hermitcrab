@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Eat.unity
     guid: ec6a187c9a3ba924ab93406ae77fcd28
+  - enabled: 1
+    path: Assets/Scenes/Win.unity
+    guid: bb884dca7196ffb4583ff370fbc0ebd9
   m_configObjects: {}
