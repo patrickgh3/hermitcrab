@@ -5,6 +5,7 @@ public class Crab : MonoBehaviour {
     [SerializeField] SphereCollider pickupCollider;
     [SerializeField] BoxCollider wallCollider;
     [SerializeField] GameObject crab;
+    [SerializeField] Animator crabAnimator;
     [SerializeField] GameObject[] positions;
 
     enum State {
@@ -59,6 +60,13 @@ public class Crab : MonoBehaviour {
                 Quaternion.identity,
                 1 << LayerMask.NameToLayer("Wall"))) {
             transform.position += deltaPosZ;
+        }
+
+        if (deltaPos != Vector3.zero) {
+            crabAnimator.SetInteger("Run", 1);
+        }
+        else {
+            crabAnimator.SetInteger("Run", 0);
         }
 
         // Rotate
