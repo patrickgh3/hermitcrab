@@ -127,7 +127,7 @@ public class Crab : MonoBehaviour {
             periodicGrowTime = 0;
 
             if (sizeIndex == positions.Length - 1) {
-                SceneManager.LoadScene("Win");
+                SceneManager.LoadScene("Smack");
             }
             else {
                 state = State.Growing;

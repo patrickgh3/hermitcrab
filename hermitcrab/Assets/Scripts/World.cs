@@ -158,7 +158,8 @@ public class World : MonoBehaviour {
                 music1.Play();
             }
 
-            hud.SetSize(crab.periodicGrowTime / crab.growPeriod);
+            float bar = crab.periodicGrowTime / crab.growPeriod;
+            hud.SetSize(bar);
 
             if (crab.shell == null) {
                 hud.SetText("Find a home!");
@@ -166,6 +167,9 @@ public class World : MonoBehaviour {
             else {
                 hud.SetText("Grow!");
             }
+
+            bool flash = crab.shell == null || bar > 0.75f;
+            hud.SetFlash(flash);
         }
     }
 }

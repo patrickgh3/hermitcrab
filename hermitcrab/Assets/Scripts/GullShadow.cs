@@ -1,10 +1,18 @@
 ﻿using UnityEngine;
 
 public class GullShadow : MonoBehaviour {
+    [SerializeField] bool setDirFromTransform = false;
+
     public float direction = 0; // 0 = right
     public float curve = 2f;
     public float speed = 5f;
     float bounds = 175f;
+
+    void Awake() {
+        if (setDirFromTransform) {
+            direction = 90 - transform.eulerAngles.y;
+        }
+    }
 
     void Update() {
         direction += Time.deltaTime * curve;

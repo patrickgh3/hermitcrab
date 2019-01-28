@@ -7,6 +7,9 @@ public class HUD : MonoBehaviour {
     [SerializeField] Text text;
     float maxWidth;
 
+    float flashT;
+    bool flashing = false;
+
     void Awake() {
         maxWidth = bar.rectTransform.sizeDelta.x;
     }
@@ -17,5 +20,21 @@ public class HUD : MonoBehaviour {
 
     public void SetText(string t) {
         text.text = t;
+    }
+
+    public void SetFlash(bool f) {
+        if (flashing != f) {
+            flashT = 0;
+        }
+        flashing = f;
+    }
+
+    void Update() {
+        flashT += Time.deltaTime * 2f;
+
+        bool visible = true;
+        if (flashing && flashT % 1 < 0.5f) visible = false;
+
+        text.enabled = visible;
     }
 }
