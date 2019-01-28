@@ -113,6 +113,7 @@ public class Crab : MonoBehaviour {
                     World.PlayLastShellMusic();
                 }
                 World.PlaySound(World.Sound.ShellGrab);
+                World.HideInstructions();
             }
         }
 

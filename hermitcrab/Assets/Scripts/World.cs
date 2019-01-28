@@ -9,6 +9,7 @@ public class World : MonoBehaviour {
         SeagullScreech,
         ShellGrab,
         ShellPop,
+        Smack,
     }
 
     [SerializeField] AudioSource music1;
@@ -17,6 +18,7 @@ public class World : MonoBehaviour {
     [SerializeField] AudioSource sfxPop;
     [SerializeField] AudioSource walking;
     [SerializeField] AudioSource seagulls;
+    [SerializeField] AudioSource screaming;
 
     [SerializeField] AudioClip NoShell1;
     [SerializeField] AudioClip NoShell2;
@@ -26,6 +28,8 @@ public class World : MonoBehaviour {
     [SerializeField] AudioClip Shell3;
     [SerializeField] AudioClip LastShellObtained;
     [SerializeField] AudioClip Win;
+    [SerializeField] AudioClip Smack;
+    [SerializeField] AudioClip Screaming;
 
     [SerializeField] AudioClip AngrySeagull;
     [SerializeField] AudioClip CantGrab;
@@ -40,6 +44,10 @@ public class World : MonoBehaviour {
     [SerializeField] Crab crab;
     [SerializeField] HUD hud;
 
+    public static void HideInstructions() {
+        instance.hud.HideInstructions();
+    }
+
     public static void PlaySound(Sound sound) {
         instance.PlaySoundInst(sound);
     }
@@ -53,6 +61,7 @@ public class World : MonoBehaviour {
             case (Sound.SeagullScreech): clip = SeagullScreech; break;
             case (Sound.ShellGrab): clip = ShellGrab; break;
             case (Sound.ShellPop): clip = ShellPop; break;
+            case (Sound.Smack): clip = Smack; break;
         }
 
         AudioSource src = sfx;
@@ -96,6 +105,7 @@ public class World : MonoBehaviour {
         ambiance.Stop();
         walking.Stop();
         seagulls.Stop();
+        screaming.Stop();
 
         string sceneName = SceneManager.GetActiveScene().name;
 
@@ -118,9 +128,14 @@ public class World : MonoBehaviour {
             music1.Play();
         }
 
-        if (sceneName == "GenScene" || sceneName == "Title") {
+        if (sceneName == "GenScene" || sceneName == "Title" || sceneName == "Intro") {
             seagulls.clip = AngrySeagull;
             seagulls.Play();
+        }
+
+        if (sceneName == "Intro") {
+            screaming.clip = Screaming;
+            screaming.Play();
         }
 
         crab = FindObjectOfType<Crab>();

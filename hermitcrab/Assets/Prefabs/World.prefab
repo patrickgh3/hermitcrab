@@ -86,7 +86,7 @@ GameObject:
   - component: {fileID: 4174305977312428}
   - component: {fileID: 82027940049099754}
   m_Layer: 0
-  m_Name: Seagulls
+  m_Name: Screaming
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -103,6 +103,22 @@ GameObject:
   - component: {fileID: 82884324520424412}
   m_Layer: 0
   m_Name: SFX
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1960389415103766
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4741112909023132}
+  - component: {fileID: 82252115288938058}
+  m_Layer: 0
+  m_Name: Seagulls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -152,6 +168,7 @@ Transform:
   - {fileID: 4997580431822240}
   - {fileID: 4776543200927210}
   - {fileID: 4096775450975176}
+  - {fileID: 4741112909023132}
   - {fileID: 4174305977312428}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -162,6 +179,19 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1671292770156006}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4130353164609524}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4741112909023132
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1960389415103766}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -230,9 +260,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 85a77afad97a2cf4cbfe9956e1baef5a, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 74eaea9089df67d4aac3c10d56a30a0f, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.506
+  m_Volume: 0.218
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -518,6 +548,101 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!82 &82252115288938058
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1960389415103766}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 85a77afad97a2cf4cbfe9956e1baef5a, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 0.506
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -902,7 +1027,8 @@ MonoBehaviour:
   sfx: {fileID: 82884324520424412}
   sfxPop: {fileID: 82223200626142184}
   walking: {fileID: 82821736914843574}
-  seagulls: {fileID: 82027940049099754}
+  seagulls: {fileID: 82252115288938058}
+  screaming: {fileID: 82027940049099754}
   NoShell1: {fileID: 8300000, guid: ca4c2e1d7b8b5074ab3be2ed2cb1bcff, type: 3}
   NoShell2: {fileID: 8300000, guid: c84e0b478633d734682c9c40be64697b, type: 3}
   OpeningCutscene: {fileID: 8300000, guid: 9092c42c12641244684259fb2af6159a, type: 3}
@@ -911,6 +1037,8 @@ MonoBehaviour:
   Shell3: {fileID: 8300000, guid: 45916402c7c115344a4e55ad9ce52639, type: 3}
   LastShellObtained: {fileID: 8300000, guid: 9092c42c12641244684259fb2af6159a, type: 3}
   Win: {fileID: 8300000, guid: 9092c42c12641244684259fb2af6159a, type: 3}
+  Smack: {fileID: 8300000, guid: d4b772b70e787d5449a8d8930bcc7db0, type: 3}
+  Screaming: {fileID: 8300000, guid: 74eaea9089df67d4aac3c10d56a30a0f, type: 3}
   AngrySeagull: {fileID: 8300000, guid: 85a77afad97a2cf4cbfe9956e1baef5a, type: 3}
   CantGrab: {fileID: 8300000, guid: a72574d51f35e6d449909e12ccfe68c1, type: 3}
   GameOverSwoop: {fileID: 8300000, guid: 939772f2009f3d840baa848ca1b4f455, type: 3}

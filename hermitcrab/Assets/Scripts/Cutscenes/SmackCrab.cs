@@ -12,11 +12,11 @@ public class SmackCrab : MonoBehaviour {
             rb.isKinematic = false;
             rb.useGravity = true;
             //rb.AddForce(new Vector3(0, 5000f, 0)); // decapitation is too dark
-            rb.angularVelocity = new Vector3(Random.Range(100f, 300f), Random.Range(100f, 300f), Random.Range(100f, 300f));
+            //rb.angularVelocity = new Vector3(Random.Range(100f, 300f), Random.Range(100f, 300f), Random.Range(100f, 300f));
 
             rb.WakeUp();
 
-            World.PlaySound(World.Sound.ShellPop);
+            World.PlaySound(World.Sound.Smack);
         }
     }
 }

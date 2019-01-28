@@ -5,6 +5,7 @@ public class HUD : MonoBehaviour {
     [SerializeField] Image bar;
     [SerializeField] Image barBacking;
     [SerializeField] Text text;
+    [SerializeField] Text instructionsText;
     float maxWidth;
 
     float flashT;
@@ -27,6 +28,10 @@ public class HUD : MonoBehaviour {
             flashT = 0;
         }
         flashing = f;
+    }
+
+    public void HideInstructions() {
+        instructionsText.enabled = false;
     }
 
     void Update() {
